@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ngôi nhà nhỏ của Nhím và Thỏ 🏡</title>
+<style>
+:root{
+  --bg:#fff7f0; --ink:#684b48; --pink:#ffdce5; --peach:#ffe6d5;
+  --cream:#fffaf2; --accent:#f28e9d; --green:#b7d9a8; --shadow:0 12px 28px #8e65501a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 10% 0%,#fff0e8,transparent 35%),linear-gradient(180deg,#fff8f3,#fff1f4);font-family:ui-rounded,"Arial Rounded MT Bold",system-ui,-apple-system,sans-serif;color:var(--ink);min-height:100vh}
+button{font:inherit;cursor:pointer}
+.page{max-width:920px;margin:0 auto;padding:20px 14px 36px}
+header{text-align:center;padding:6px 0 14px}
+.eyebrow{display:inline-block;background:#fff;border:1px solid #ffe0df;border-radius:999px;padding:7px 12px;font-size:12px;letter-spacing:.4px;color:#c77982}
+h1{font-size:clamp(26px,6vw,42px);line-height:1.12;margin:12px 0 8px;color:#8e5d60}
+.subtitle{margin:0 auto;max-width:560px;font-size:14px;line-height:1.6;color:#987775}
+.layout{display:grid;grid-template-columns:1fr;gap:14px}
+.panel{background:#ffffffd9;border:1px solid #ffe6e0;border-radius:24px;padding:14px;box-shadow:var(--shadow)}
+.scene-wrap{position:relative;overflow:hidden;border-radius:20px;background:linear-gradient(#e7f5ff 0%,#fff0e5 72%,#dff0d0 72%);border:1px solid #e8e4d8}
+.scene-wrap:before{content:"";position:absolute;width:90px;height:90px;right:8%;top:7%;background:#fff3b7;border-radius:50%;box-shadow:0 0 0 12px #fff3b733}
+#houseSvg{display:block;width:100%;height:auto;position:relative;z-index:1}
+.scene-caption{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;font-size:12px;color:#a17a76}
+.live-badge{background:#fff2d9;border-radius:999px;padding:7px 10px;color:#a36b4f;font-weight:800}
+.progress-row{display:flex;align-items:center;gap:10px;margin:2px 2px 14px}
+.progress-track{height:8px;background:#f8e7e5;border-radius:99px;flex:1;overflow:hidden}
+.progress-fill{height:100%;width:20%;background:linear-gradient(90deg,#f6a6b6,#ffc68e);border-radius:99px;transition:width .3s}
+.step{font-size:12px;white-space:nowrap;color:#b17e7c;font-weight:800}
+.question-kicker{font-size:12px;color:#d1848c;font-weight:800;letter-spacing:.6px;text-transform:uppercase}
+h2{font-size:22px;line-height:1.25;margin:7px 0 8px;color:#825b5c}
+.description{font-size:13px;line-height:1.55;margin:0 0 15px;color:#9a7a77}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice{background:#fffaf8;border:2px solid #f7e2df;border-radius:17px;padding:12px 9px;min-height:90px;text-align:left;color:var(--ink);transition:.2s;position:relative}
+.choice .emoji{font-size:25px;display:block;margin-bottom:6px}
+.choice strong{display:block;font-size:14px;line-height:1.3}
+.choice small{display:block;font-size:11px;line-height:1.4;color:#ad8984;margin-top:4px}
+.choice.selected{border-color:#ef9ba9;background:#fff0f3;box-shadow:0 5px 14px #e58d9d25;transform:translateY(-1px)}
+.choice.selected:after{content:"✓";position:absolute;right:9px;top:7px;background:#ee93a3;color:white;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:900}
+.choice:focus-visible,.primary:focus-visible,.secondary:focus-visible{outline:3px solid #d78c99;outline-offset:3px}
+.note{margin:13px 0 0;background:#fff5e9;border-radius:14px;padding:10px 12px;font-size:12px;line-height:1.5;color:#a77965;min-height:39px}
+.actions{display:flex;gap:9px;margin-top:14px}
+.primary,.secondary{border:0;border-radius:15px;padding:13px 15px;font-weight:800;transition:transform .15s}
+.primary{background:linear-gradient(135deg,#f3a1b1,#ffbd9b);color:#fff;box-shadow:0 7px 15px #e6a1a52e;flex:1}
+.primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.secondary{background:#fff2ed;color:#ad7776}
+.primary:not(:disabled):active,.secondary:active{transform:scale(.98)}
+.finish{display:none;text-align:center;padding:10px 2px 2px}
+.finish.show{display:block}
+.finish h2{font-size:25px}
+.finish p{font-size:14px;line-height:1.8;color:#987574}
+.love-note{background:#fff1f5;border:1px dashed #e9a0ae;border-radius:18px;padding:15px;margin:14px 0;font-weight:700;color:#98626b;line-height:1.8}
+.footer{text-align:center;color:#bd9691;font-size:11px;margin:17px 0 0}
+@media(min-width:760px){.layout{grid-template-columns:1.05fr .95fr;align-items:start}.panel{padding:18px}.scene-wrap{position:sticky;top:12px}.question-panel{padding:22px}.scene-caption{font-size:13px}}
+@media(max-width:380px){.choices{gap:7px}.choice{padding:10px 7px}.choice strong{font-size:13px}.panel{padding:11px}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="eyebrow">🐰 🦔 CHUYỆN NHÀ MÌNH</div>
+    <h1>Ngôi nhà nhỏ của Nhím và Thỏ</h1>
+    <p class="subtitle">Cùng nhau chọn từng điều bé xíu để xây nên tổ ấm trong mơ của hai đứa mình nha 💗</p>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <div class="scene-wrap">
+        <svg id="houseSvg" viewBox="0 0 520 400" role="img" aria-label="Minh họa ngôi nhà của Nhím và Thỏ">
+          <defs>
+            <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1"><stop id="wallStop1" offset="0" stop-color="#ffe1d1"/><stop id="wallStop2" offset="1" stop-color="#ffcdbf"/></linearGradient>
+            <linearGradient id="roofGrad" x1="0" y1="0" x2="1" y2="1"><stop id="roofStop1" offset="0" stop-color="#d9b8f4"/><stop id="roofStop2" offset="1" stop-color="#b99ae7"/></linearGradient>
+            <filter id="softShadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#9e7b72" flood-opacity=".18"/></filter>
+          </defs>
+          <!-- clouds and background -->
+          <g fill="#fff" opacity=".82">
+            <g transform="translate(62 57)"><ellipse cx="22" cy="13" rx="22" ry="11"/><ellipse cx="38" cy="7" rx="15" ry="13"/><ellipse cx="51" cy="14" rx="18" ry="9"/></g>
+            <g transform="translate(350 84) scale(.7)"><ellipse cx="22" cy="13" rx="22" ry="11"/><ellipse cx="38" cy="7" rx="15" ry="13"/><ellipse cx="51" cy="14" rx="18" ry="9"/></g>
+          </g>
+          <g fill="#fff6bd" opacity=".95"><path d="M92 104l3 8 8 3-8 3-3 8-3-8-8-3 8-3z"/><path d="M419 46l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></g>
+          <!-- lawn -->
+          <path d="M0 302 Q110 279 210 301 T520 294 L520 400 L0 400Z" fill="#cde7bd"/>
+          <path d="M0 335 Q120 312 260 338 T520 330 L520 400 L0 400Z" fill="#b7d9a8" opacity=".6"/>
+          <!-- path -->
+          <path d="M221 400 Q244 354 250 325 L300 325 Q302 361 330 400Z" fill="#f6dfc6"/>
+          <g fill="#e8cbb3" opacity=".75"><ellipse cx="269" cy="369" rx="18" ry="5"/><ellipse cx="272" cy="389" rx="24" ry="5"/></g>
+          <!-- house shadow -->
+          <ellipse cx="264" cy="315" rx="157" ry="17" fill="#7eaa7d" opacity=".25"/>
+          <!-- house body -->
+          <g filter="url(#softShadow)">
+            <path id="wallBody" d="M139 177 L260 103 L381 177 L381 304 Q381 312 372 312 L148 312 Q139 312 139 304Z" fill="url(#wallGrad)" stroke="#b77f78" stroke-width="3" stroke-linejoin="round"/>
+            <path id="roofBody" d="M119 182 L260 89 L401 182 L383 196 L260 115 L137 196Z" fill="url(#roofGrad)" stroke="#9b7eb5" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M151 177 L260 109 L369 177" fill="none" stroke="#fff" stroke-width="4" opacity=".5" stroke-linecap="round"/>
+          </g>
+          <!-- attic window -->
+          <circle cx="260" cy="158" r="21" fill="#fff7e8" stroke="#b77f78" stroke-width="3"/>
+          <circle cx="260" cy="158" r="15" fill="#c6e8f5"/>
+          <path d="M260 143V173M245 158H275" stroke="#fffaf0" stroke-width="3"/>
+          <!-- front windows -->
+          <g id="leftWindow">
+            <rect x="162" y="204" width="66" height="57" rx="9" fill="#fff6e8" stroke="#b77f78" stroke-width="3"/>
+            <rect x="169" y="211" width="52" height="43" rx="5" fill="#c7e7f5"/>
+            <path d="M195 211V254M169 233H221" stroke="#fff" stroke-width="3"/>
+            <path d="M158 203 Q195 181 232 203 L227 211 Q195 194 163 211Z" fill="#f5a8b2" stroke="#b77f78" stroke-width="2"/>
+          </g>
+          <g id="rightWindow">
+            <rect x="291" y="204" width="66" height="57" rx="9" fill="#fff6e8" stroke="#b77f78" stroke-width="3"/>
+            <rect x="298" y="211" width="52" height="43" rx="5" fill="#c7e7f5"/>
+            <path d="M324 211V254M298 233H350" stroke="#fff" stroke-width="3"/>
+            <path d="M287 203 Q324 181 361 203 L356 211 Q324 194 292 211Z" fill="#f5a8b2" stroke="#b77f78" stroke-width="2"/>
+          </g>
+          <!-- front door -->
+          <rect x="235" y="242" width="51" height="70" rx="23 23 5 5" fill="#c98c6f" stroke="#9d6c5a" stroke-width="3"/>
+          <path d="M242 251 Q260 235 279 251" fill="none" stroke="#f5c5a4" stroke-width="3"/>
+          <circle cx="275" cy="278" r="3.5" fill="#ffe7a8"/>
+          <circle cx="260" cy="258" r="7" fill="#f6b8c5"/><path d="M260 265l-6 6h12z" fill="#f6b8c5"/>
+          <!-- house name plaque -->
+          <rect x="216" y="183" width="88" height="18" rx="9" fill="#fff8ef" stroke="#e8b7ad" stroke-width="1.5"/>
+          <text x="260" y="196" text-anchor="middle" font-size="10" font-weight="800" fill="#a76f71">NHÀ MÌNH ♡</text>
+          <!-- sofa visible in window -->
+          <g id="sofa">
+            <rect x="303" y="237" width="42" height="12" rx="5" fill="#f6a8b8"/>
+            <rect x="307" y="229" width="34" height="13" rx="5" fill="#f9c0cc"/>
+            <path d="M305 246v7m38-7v7" stroke="#ad8179" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+          <!-- bedroom light shown in left window -->
+          <g id="bedroomLight">
+            <path d="M184 212 Q195 199 206 212" fill="none" stroke="#b6a0ce" stroke-width="2"/>
+            <path d="M195 212v7" stroke="#b6a0ce" stroke-width="2"/>
+            <path id="lightShape" d="M195 220l2.5 5 5.5.8-4 3.8 1 5.4-5-2.7-5 2.7 1-5.4-4-3.8 5.5-.8z" fill="#ffe48a"/>
+          </g>
+          <!-- garden feature -->
+          <g id="flowerGarden">
+            <g transform="translate(72 310)">
+              <path d="M0 21Q-2 7 2 -2" stroke="#5c9e66" stroke-width="3" fill="none"/>
+              <path d="M1 11q-16 -12 -17 0q10 9 17 0" fill="#8dc78b"/>
+              <g fill="#ff9db8"><circle cx="-3" cy="-5" r="7"/><circle cx="-10" cy="0" r="7"/><circle cx="4" cy="1" r="7"/><circle cx="-3" cy="5" r="7"/></g><circle cx="-3" cy="0" r="4" fill="#ffdc8b"/>
+            </g>
+            <g transform="translate(438 313)">
+              <path d="M0 20Q2 8 -2 -2" stroke="#5c9e66" stroke-width="3" fill="none"/>
+              <path d="M0 12q15 -12 17 0q-10 9 -17 0" fill="#8dc78b"/>
+              <g fill="#f4b5ff"><circle cx="-3" cy="-5" r="7"/><circle cx="-10" cy="0" r="7"/><circle cx="4" cy="1" r="7"/><circle cx="-3" cy="5" r="7"/></g><circle cx="-3" cy="0" r="4" fill="#ffdc8b"/>
+            </g>
+          </g>
+          <g id="heartPond" style="display:none">
+            <path d="M378 329 Q399 313 418 329 Q435 346 398 366 Q361 346 378 329Z" fill="#87d3e9" stroke="#5ab7d1" stroke-width="3"/>
+            <path d="M380 338q18 8 35 0" fill="none" stroke="#dffaff" stroke-width="3" stroke-linecap="round"/>
+            <path d="M397 322q-7 -12 -13 -7q-6 8 13 19q19 -11 13 -19q-6 -5 -13 7" fill="#f59bb3"/>
+          </g>
+          <!-- little picket fence -->
+          <g fill="#fff8ee" stroke="#d5b7a1" stroke-width="1.5">
+            <path d="M22 341v-22l8 -8 8 8v22z"/><path d="M44 341v-22l8 -8 8 8v22z"/><path d="M66 341v-22l8 -8 8 8v22z"/>
+            <path d="M440 346v-22l8 -8 8 8v22z"/><path d="M462 346v-22l8 -8 8 8v22z"/><path d="M484 346v-22l8 -8 8 8v22z"/>
+            <path d="M19 329H85M437 334H503" fill="none" stroke-width="4"/>
+          </g>
+          <!-- characters -->
+          <g id="hedgehog" transform="translate(145 319)">
+            <g fill="#93654f" stroke="#79503f" stroke-width="1.4">
+              <path d="M-23 -14l-4 -13 12 7 -1 -15 11 11 4 -15 8 14 9 -12 3 16 13 -6 -5 15Z"/>
+            </g>
+            <ellipse cx="0" cy="0" rx="24" ry="20" fill="#d69c78" stroke="#9c6c52" stroke-width="1.5"/>
+            <ellipse cx="8" cy="3" rx="16" ry="14" fill="#ffe0c4"/>
+            <circle cx="7" cy="-2" r="2.5" fill="#5b4038"/><circle cx="19" cy="5" r="2.5" fill="#5b4038"/>
+            <ellipse cx="14" cy="7" rx="3" ry="2.2" fill="#e88b8e"/>
+            <path d="M9 11q5 5 9 0" fill="none" stroke="#9a5d5b" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="-11" cy="5" r="4" fill="#f5a3a8" opacity=".8"/>
+            <path d="M-8 17q-7 10 -15 4M14 17q8 8 15 0" stroke="#d69c78" stroke-width="5" stroke-linecap="round"/>
+          </g>
+          <g id="bunny" transform="translate(369 316)">
+            <ellipse cx="-7" cy="-30" rx="8" ry="22" transform="rotate(-12 -7 -30)" fill="#fffaf2" stroke="#d8b7aa" stroke-width="1.5"/>
+            <ellipse cx="10" cy="-31" rx="8" ry="23" transform="rotate(12 10 -31)" fill="#fffaf2" stroke="#d8b7aa" stroke-width="1.5"/>
+            <ellipse cx="-7" cy="-30" rx="3" ry="14" transform="rotate(-12 -7 -30)" fill="#f4b4c1"/>
+            <ellipse cx="10" cy="-31" rx="3" ry="15" transform="rotate(12 10 -31)" fill="#f4b4c1"/>
+            <ellipse cx="0" cy="0" rx="23" ry="22" fill="#fffaf2" stroke="#d8b7aa" stroke-width="1.5"/>
+            <circle cx="-7" cy="-3" r="2.5" fill="#5b4038"/><circle cx="8" cy="-3" r="2.5" fill="#5b4038"/>
+            <ellipse cx="1" cy="4" rx="3" ry="2.4" fill="#ed9ba8"/>
+            <path d="M-3 9q4 4 8 0" fill="none" stroke="#9a5d5b" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="-13" cy="5" r="4" fill="#f5a3a8" opacity=".8"/><circle cx="14" cy="5" r="4" fill="#f5a3a8" opacity=".8"/>
+            <path d="M-8 18q-8 8 -14 1M12 18q8 8 14 1" stroke="#fffaf2" stroke-width="6" stroke-linecap="round"/>
+            <path d="M-14 -15q14 -13 27 0" fill="none" stroke="#f3a3b3" stroke-width="4" stroke-linecap="round"/>
+            <path d="M13 -16l4 -7 4 7" fill="#f3a3b3" stroke="#e68a9c" stroke-width="1"/>
+          </g>
+          <!-- tiny floating hearts -->
+          <g fill="#f3a0b4"><path d="M224 78c-7-8-16 2 0 12 16-10 7-20 0-12Z"/><path d="M310 63c-5-6-12 2 0 9 12-7 5-15 0-9Z"/></g>
+          <text x="260" y="387" text-anchor="middle" font-size="11" fill="#72996a" font-weight="800">Nơi tình yêu lớn lên 🌷</text>
+        </svg>
+      </div>
+      <div class="scene-caption"><span>🏡 Bản thiết kế đang thay đổi theo lựa chọn của em</span><span class="live-badge" id="liveBadge">Đang xây…</span></div>
+    </section>
+
+    <section class="panel question-panel">
+      <div id="game">
+        <div class="progress-row"><span class="step" id="stepLabel">CÂU 1 / 5</span><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+        <div class="question-kicker" id="kicker">BƯỚC 1 · NGOẠI THẤT</div>
+        <h2 id="question">Chúng mình sơn tường màu gì?</h2>
+        <p class="description" id="description">Chọn màu em thích nha. Nhìn sang ngôi nhà bên cạnh để xem màu tường thay đổi ngay nè!</p>
+        <div class="choices" id="choices"></div>
+        <div class="note" id="note">💌 Mỗi lựa chọn của em sẽ làm ngôi nhà chung của Nhím và Thỏ thay đổi ngay lập tức.</div>
+        <div class="actions">
+          <button class="secondary" id="backBtn" type="button" style="display:none">← Quay lại</button>
+          <button class="primary" id="nextBtn" type="button" disabled>Chọn xong rồi, tiếp nè 💗</button>
+        </div>
+      </div>
+      <div class="finish" id="finish">
+        <div style="font-size:48px">🏡💗🐰🦔</div>
+        <h2>Nhà mình hoàn thành rồi!</h2>
+        <p>Nhìn xem, đây là tổ ấm do chính hai đứa mình cùng chọn từng chút một đó.</p>
+        <div class="love-note">“Đây là ngôi nhà nhỏ của chúng mình. Em không cần một căn nhà thật lớn, chỉ cần sau này trong căn nhà ấy luôn có anh và em. 🐰💕🦔”</div>
+        <p id="summary"></p>
+        <button class="primary" id="restartBtn" type="button" style="width:100%">Xây một ngôi nhà khác 🔄</button>
+      </div>
+    </section>
+  </main>
+  <div class="footer">Made with love by Thỏ dành cho Nhím · Một mái nhà, hai trái tim 💞</div>
+</div>
+
+<script>
+const questions = [
+  {
+    kicker:"BƯỚC 1 · NGOẠI THẤT", title:"Chúng mình sơn tường màu gì?",
+    desc:"Chạm vào một lựa chọn nha — màu tường của ngôi nhà sẽ đổi ngay!",
+    key:"wall", options:[
+      {label:"Hồng pastel",sub:"Ngọt ngào như kẹo dâu",emoji:"🌸",value:"#ffd8df",top:"#ffe7eb",bottom:"#ffc8d3"},
+      {label:"Xanh da trời",sub:"Dịu dàng như bầu trời",emoji:"🩵",value:"#c9e8f7",top:"#e0f4ff",bottom:"#b7def3"}
+    ], note:"🎨 Màu tường là màu của những ngày bình yên bên nhau."
+  },
+  {
+    kicker:"BƯỚC 2 · MÁI ẤM", title:"Mái nhà của mình màu nào?",
+    desc:"Mái nhà đã sẵn sàng thay áo. Em thích kiểu mộng mơ hay nổi bật nè?",
+    key:"roof", options:[
+      {label:"Tím mộng mơ",sub:"Như một giấc mơ nhỏ",emoji:"💜",value:"#c6a9e8",top:"#dfcdf6",bottom:"#b596df"},
+      {label:"Đỏ dâu",sub:"Ấm áp và ngọt ngào",emoji:"🍓",value:"#f19aa8",top:"#ffbdc5",bottom:"#e98293"}
+    ], note:"🏠 Mái nhà che mưa nắng, còn chúng mình che chở cho nhau."
+  },
+  {
+    kicker:"BƯỚC 3 · PHÒNG KHÁCH", title:"Sofa phòng khách chọn màu gì?",
+    desc:"Tưởng tượng hai đứa ngồi cạnh nhau, xem phim và ăn bánh nhé!",
+    key:"sofa", options:[
+      {label:"Hồng mềm mại",sub:"Ôm vào là muốn ngủ",emoji:"🩷",value:"#f6a8b8"},
+      {label:"Xanh bạc hà",sub:"Mát mắt, thật thư giãn",emoji:"🍃",value:"#a9d9c1"}
+    ], note:"🛋️ Một chiếc sofa êm, hai người ngồi sát lại — thế là đủ vui rồi."
+  },
+  {
+    kicker:"BƯỚC 4 · PHÒNG NGỦ", title:"Đèn ngủ của hai đứa là gì?",
+    desc:"Chọn món trang trí khiến buổi tối trong nhà mình thật ấm áp.",
+    key:"light", options:[
+      {label:"Trăng và sao",sub:"Ngủ ngon dưới bầu trời nhỏ",emoji:"🌙",value:"star"},
+      {label:"Đèn hoa xinh",sub:"Như một vườn hoa bé xíu",emoji:"🌷",value:"flower"}
+    ], note:"🌙 Dù ngoài kia có bận rộn đến đâu, về nhà mình vẫn có nhau."
+  },
+  {
+    kicker:"BƯỚC 5 · KHU VƯỜN", title:"Trước nhà có gì thật xinh?",
+    desc:"Chọn góc nhỏ cuối cùng để hoàn thiện ngôi nhà của Nhím và Thỏ.",
+    key:"garden", options:[
+      {label:"Vườn hoa rực rỡ",sub:"Mỗi ngày cùng chăm hoa",emoji:"🌷",value:"flowers"},
+      {label:"Hồ trái tim",sub:"Một góc nhỏ thật lãng mạn",emoji:"💗",value:"pond"}
+    ], note:"🌱 Tình yêu cũng giống khu vườn — cùng chăm sóc thì sẽ lớn lên."
+  }
+];
+let current=0;
+const picks={};
+const $=id=>document.getElementById(id);
+
+function renderQuestion(){
+  const q=questions[current];
+  $("stepLabel").textContent=`CÂU ${current+1} / ${questions.length}`;
+  $("progressFill").style.width=`${((current+1)/questions.length)*100}%`;
+  $("kicker").textContent=q.kicker;
+  $("question").textContent=q.title;
+  $("description").textContent=q.desc;
+  $("note").textContent=q.note;
+  $("choices").innerHTML="";
+  q.options.forEach((opt,i)=>{
+    const btn=document.createElement("button");
+    btn.type="button"; btn.className="choice"+(picks[q.key]===i?" selected":"");
+    btn.innerHTML=`<span class="emoji">${opt.emoji}</span><strong>${opt.label}</strong><small>${opt.sub}</small>`;
+    btn.setAttribute("aria-pressed",picks[q.key]===i?"true":"false");
+    btn.addEventListener("click",()=>{
+      picks[q.key]=i;
+      [...$("choices").children].forEach((el,j)=>{
+        el.classList.toggle("selected",j===i); el.setAttribute("aria-pressed",j===i?"true":"false");
+      });
+      updateHouse();
+      $("nextBtn").disabled=false;
+      $("liveBadge").textContent="Đã đổi rồi! ✨";
+      $("note").textContent="✨ Tuyệt quá! Ngôi nhà đã thay đổi theo lựa chọn của em rồi đó.";
+    });
+    $("choices").appendChild(btn);
+  });
+  $("nextBtn").disabled=picks[q.key]===undefined;
+  $("backBtn").style.display=current===0?"none":"inline-block";
+  $("nextBtn").textContent=current===questions.length-1?"Hoàn thành nhà mình 🏡":"Chọn xong rồi, tiếp nè 💗";
+  $("liveBadge").textContent=picks[q.key]===undefined?"Đang xây…":"Đã chọn rồi ✨";
+}
+function selectedValue(key, fallback=0){
+  const q=questions.find(x=>x.key===key);
+  return q.options[picks[key]===undefined?fallback:picks[key]];
+}
+function updateHouse(){
+  const wall=selectedValue("wall");
+  $("wallStop1").setAttribute("stop-color",wall.top);
+  $("wallStop2").setAttribute("stop-color",wall.bottom);
+  $("wallBody").setAttribute("stroke",wall.value==="#c9e8f7"?"#83afc6":"#b77f78");
+  const roof=selectedValue("roof");
+  $("roofStop1").setAttribute("stop-color",roof.top);
+  $("roofStop2").setAttribute("stop-color",roof.bottom);
+  $("roofBody").setAttribute("stroke",roof.value==="#f19aa8"?"#c66f80":"#9b7eb5");
+  const sofa=selectedValue("sofa");
+  document.querySelectorAll("#sofa rect").forEach((r,i)=>r.setAttribute("fill",i===0?sofa.value:(picks.sofa===1?"#c9eddb":"#f9c0cc")));
+  $("lightShape").setAttribute("d",selectedValue("light").value==="flower"
+    ?"M195 218 C184 212 181 225 193 229 C182 240 196 245 199 233 C211 238 216 224 203 222 C206 209 195 209 195 218Z"
+    :"M195 220l2.5 5 5.5.8-4 3.8 1 5.4-5-2.7-5 2.7 1-5.4-4-3.8 5.5-.8z");
+  $("lightShape").setAttribute("fill",selectedValue("light").value==="flower"?"#ffb6c8":"#ffe48a");
+  $("flowerGarden").style.display=selectedValue("garden").value==="flowers"?"":"none";
+  $("heartPond").style.display=selectedValue("garden").value==="pond"?"":"none";
+  // Subtle visual feedback for each newly selected feature
+  $("liveBadge").textContent="Ngôi nhà đang đổi ✨";
+}
+$("nextBtn").addEventListener("click",()=>{
+  if(picks[questions[current].key]===undefined)return;
+  if(current<questions.length-1){current++;renderQuestion();window.scrollTo({top:0,behavior:"smooth"});}
+  else{
+    $("game").style.display="none"; $("finish").classList.add("show");
+    const names=questions.map(q=>`${q.key==="wall"?"Tường":q.key==="roof"?"Mái":q.key==="sofa"?"Sofa":q.key==="light"?"Đèn ngủ":"Khu vườn"}: ${q.options[picks[q.key]].label}`);
+    $("summary").textContent="Lựa chọn của chúng mình: "+names.join(" · ")+".";
+    $("liveBadge").textContent="Nhà hoàn thành! 💗";
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+});
+$("backBtn").addEventListener("click",()=>{if(current>0){current--;renderQuestion();}});
+$("restartBtn").addEventListener("click",()=>{
+  current=0; Object.keys(picks).forEach(k=>delete picks[k]);
+  $("finish").classList.remove("show");$("game").style.display="";
+  // Reset house to first-option appearance
+  updateHouse();renderQuestion();window.scrollTo({top:0,behavior:"smooth"});
+});
+updateHouse();renderQuestion();
+</script>
+</body>
+</html>
